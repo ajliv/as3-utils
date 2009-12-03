@@ -127,12 +127,14 @@ package com.ajlivingston.utils {
 			var scale:Number;
 			var container:DisplayObject = contain;
 			// If container is null, try and set it to obj's parent. Else, throw Error and return.
-			if (!container && obj.parent) {
-				container = obj.parent;
-			}
-			else {
-				throw new Error("Invalid contain parameter.");
-				return;
+			if (!container) {
+				if (obj.parent) {
+					container = obj.parent;
+				}
+				else {
+					throw new Error("Invalid contain parameter.");
+					return;
+				}
 			}
 			
 			// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
