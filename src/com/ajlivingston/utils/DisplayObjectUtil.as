@@ -41,7 +41,7 @@ package com.ajlivingston.utils {
 		}
 		
 		/**
-		 * Scales a <code>DisplayObject</code> as large as possible while fitting completely within the stage.
+		 * Scales a <code>DisplayObject</code> to fit the stage.
 		 * Requires the <code>DisplayObject</code> to be on the stage for any results.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
@@ -65,7 +65,7 @@ package com.ajlivingston.utils {
 		}
 		
 		/**
-		 * Returns the scale amount for a <code>DisplayObject</code> to fit completely within the stage.
+		 * Returns the scale amount for a <code>DisplayObject</code> to fit the stage. Useful for tweening.
 		 * Requires the <code>DisplayObject</code> to be on the stage for a return value other than its current <code>scaleX</code> property.
 		 * 
 		 * @param obj The <code>DisplayObject</code> used to calculate return value.
@@ -108,12 +108,13 @@ package com.ajlivingston.utils {
 				obj.scaleY = scale;
 				
 				// Center obj on the stage if center is set to true.
-				if(center) centerOnStage(obj);
+				if(center) 
+					centerOnStage(obj);
 		 	}
 		 }
 		 
 		 /**
-		 * Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage.
+		 * Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage. Useful for tweening.
 		 * Requires the <code>DisplayObject</code> to be on the stage for a return value other than its current <code>scaleX</code> property.
 		 * 
 		 * @param obj The <code>DisplayObject</code> used to calculate return value.
@@ -136,7 +137,7 @@ package com.ajlivingston.utils {
 		 }
 		 
 		 /**
-		 * Scales a <code>DisplayObject</code> as large as possible while fitting completely within another <code>DisplayObjct</code>.
+		 * Scales a <code>DisplayObject</code> to fit another <code>DisplayObjct</code>.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
 		 * @param contain The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
@@ -144,12 +145,12 @@ package com.ajlivingston.utils {
 		 * @param addTo If true, add <code>obj</code> as a child of <code>contain</code> at the <code>addToIndex</code> parameter's value. 
 		 * 	The <code>contain</code> parameter must be passed a <code>DisplayObjectContainer</code>.
 		 * @param addToIndex The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as <code>true</code>.
-		 * 	The <code>obj</code> will be added to the top if less than 0.
+		 * 	The <code>obj</code> will be added at the top(default) if less than 0.
 		 * 
 		 * @see #centerOn()
+		 * @see #getScaleToFit()
 		 */
 		 public static function scaleToFit(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void {
-			var scale:Number;
 			var container:DisplayObject = contain;
 			// If container is null, try and set it to obj's parent. Else, throw Error and return.
 			if (!container) {
@@ -157,15 +158,12 @@ package com.ajlivingston.utils {
 					container = obj.parent;
 				}
 				else {
-					throw new Error("Invalid contain parameter.");
+					throw new Error("The obj parameter must have a parent if contain is null.");
 					return;
 				}
 			}
-			// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
-			if ((obj.width / obj.height) <= (container.width / container.height))
-				scale = container.height / (obj.height / obj.scaleY);
-			else 
-				scale = container.width / (obj.width / obj.scaleX);
+			// Get scale amount.
+			var scale:Number = getScaleToFit(obj, container);
 			
 			// Set the scaleX and scaleY properties.
 			obj.scaleX = scale;
@@ -189,6 +187,36 @@ package com.ajlivingston.utils {
 					throw new Error("Must pass a DisplayObjectContainer to the contain parameter in order to add obj as a child.");
 				}
 			}
+		 }
+		 
+		 /**
+		 * Returns the scale amount for a <code>DisplayObject</code> to fit another <code>DisplayObject</code>. Useful for tweening.
+		 * 
+		 * @param obj The <code>DisplayObject</code> to be scaled.
+		 * @param contain The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+		 * 
+		 * @return The value to be applied to the <code>scaleX</code> and/or <code>scaleY</code> properties. Will return <code>obj</code>'s current <code>scaleX</code> property if <code>contain</code> is invalid.
+		 */
+		 public static function getScaleToFit(obj:DisplayObject, contain:DisplayObject = null):Number {
+		 	var scale:Number = obj.scaleX;
+		 	var container:DisplayObject = contain;
+			// If container is null, try and set it to obj's parent. Else, throw Error and return.
+			if (!container) {
+				if (obj.parent) {
+					container = obj.parent;
+				}
+				else {
+					throw new Error("The obj parameter must have a parent if contain is null.");
+					return scale;
+				}
+			}
+			// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
+			if ((obj.width / obj.height) <= (container.width / container.height))
+				scale = container.height / (obj.height / obj.scaleY);
+			else 
+				scale = container.width / (obj.width / obj.scaleX);
+				
+			return scale;
 		 }
 		
 		
