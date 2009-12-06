@@ -72,7 +72,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#getScaleToFillStage()">getScaleToFillStage</a>(obj:DisplayObject):Number</div>
 <div class="summaryTableDescription">[static]
-   Returns the scale amount for a <code>DisplayObject</code to fill the entire stage.</div>
+   Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
 </tr>
 <tr class="">
@@ -80,7 +80,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#getScaleToFitStage()">getScaleToFitStage</a>(obj:DisplayObject):Number</div>
 <div class="summaryTableDescription">[static]
-   Returns the scale amount for a <code>DisplayObject</code to fit completely within the stage.</div>
+   Returns the scale amount for a <code>DisplayObject</code> to fit completely within the stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
 </tr>
 <tr class="">
@@ -94,9 +94,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFit()">scaleToFit</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true):void</div>
+<a class="signatureLink" href="#scaleToFit()">scaleToFit</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</div>
 <div class="summaryTableDescription">[static]
-   Scales a <code>DisplayObject</code> to fit within another <code>DisplayObjct</code>.</div>
+   Scales a <code>DisplayObject</code> as large as possible while fitting completely within another <code>DisplayObjct</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
 </tr>
 <tr class="">
@@ -104,7 +104,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#scaleToFitStage()">scaleToFitStage</a>(obj:DisplayObject, center:Boolean = true):void</div>
 <div class="summaryTableDescription">[static]
-   Scales a <code>DisplayObject</code> to fit completely within the stage.</div>
+   Scales a <code>DisplayObject</code> as large as possible while fitting completely within the stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
 </tr>
 </table>
@@ -168,8 +168,8 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function getScaleToFillStage(obj:DisplayObject):Number</code><p>
-   Returns the scale amount for a <code>DisplayObject</code to fill the entire stage.
-   Requires the <code>DisplayObject</code> to be on the stage for a return value other than 1.
+   Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage.
+   Requires the <code>DisplayObject</code> to be on the stage for a return value other than its current <code>scaleX</code> property.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -196,8 +196,8 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function getScaleToFitStage(obj:DisplayObject):Number</code><p>
-   Returns the scale amount for a <code>DisplayObject</code to fit completely within the stage.
-   Requires the <code>DisplayObject</code> to be on the stage for a return value other than 1.
+   Returns the scale amount for a <code>DisplayObject</code> to fit completely within the stage.
+   Requires the <code>DisplayObject</code> to be on the stage for a return value other than its current <code>scaleX</code> property.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -259,8 +259,8 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFit(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true):void</code><p>
-   Scales a <code>DisplayObject</code> to fit within another <code>DisplayObjct</code>.
+<code>public static function scaleToFit(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</code><p>
+   Scales a <code>DisplayObject</code> as large as possible while fitting completely within another <code>DisplayObjct</code>.
    
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
@@ -280,6 +280,22 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">center</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; Whether or not the scaled <code>DisplayObject</code> is to be centered within the container <code>DisplayObject</code>. Default is true.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">addTo</span>:Boolean</code> (default = <code>false</code>)<code></code> &mdash; If true, add <code>obj</code> as a child of <code>contain</code> at the <code>addToIndex</code> parameter's value. 
+    The <code>contain</code> parameter must be passed a <code>DisplayObjectContainer</code>.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">addToIndex</span>:int</code> (default = <code>-1</code>)<code></code> &mdash; The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as <code>true</code>.
+    The <code>obj</code> will be added to the top if less than 0.
    
    </td>
 </tr>
@@ -299,7 +315,7 @@ showHideInherited();
 </table>
 <div class="detailBody">
 <code>public static function scaleToFitStage(obj:DisplayObject, center:Boolean = true):void</code><p>
-   Scales a <code>DisplayObject</code> to fit completely within the stage.
+   Scales a <code>DisplayObject</code> as large as possible while fitting completely within the stage.
    Requires the <code>DisplayObject</code> to be on the stage for any results.
    
    </p><span class="label">Parameters</span>
@@ -331,9 +347,8 @@ showHideInherited();
 <hr>
 <br>
 <p></p>
-<center class="copyright"> 
-</center>
+<center class="copyright">Copyright &copy; 2009 - AJ Livingston</center>
 </div>
 </body>
 </html>
-<!-- -->
+<!--Copyright © 2009 - AJ Livingston-->
