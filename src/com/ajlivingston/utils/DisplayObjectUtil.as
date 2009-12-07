@@ -2,6 +2,7 @@ package com.ajlivingston.utils {
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
+	import flash.geom.Point;
 	
 	/*
 	The MIT License
@@ -45,7 +46,7 @@ package com.ajlivingston.utils {
 		 * Requires the <code>DisplayObject</code> to be on the stage for any results.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
-		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well. True by default.
+		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well.
 		 * 
 		 * @see #centerOnStage()
 		 * @see #getScaleToFitStage()
@@ -93,7 +94,7 @@ package com.ajlivingston.utils {
 		 * Requires the <code>DisplayObject</code> passed to be on the stage for any results.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
-		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well. True by default.
+		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well.
 		 * 
 		 * @see #centerOnStage()
 		 * @see #getScaleToFillStage()
@@ -223,20 +224,34 @@ package com.ajlivingston.utils {
 		/**
 		 * Centers a <code>DisplayObject</code> on the stage.
 		 * Requires the <code>DisplayObject</code> passed to be on the stage for any results.
-		 * 
 		 * @param obj The <code>DisplayObject<code> to be centered.
+		 * @see #getCenterOnStage()
 		 */
 		public static function centerOnStage(obj:DisplayObject):void {
 			if (obj.stage) {
-				// 50% of the stage's width/height minus 50% of obj's width/height.
-				obj.x = (obj.stage.stageWidth * 0.5) - (obj.width * 0.5);
-				obj.y = (obj.stage.stageHeight * 0.5) - (obj.height * 0.5);
+				var point:Point = getCenterOnStage(obj);
+				obj.x = point.x;
+				obj.y = point.y;
 			}
 		}
 		
 		/**
+		 * Returns a <code>Point</code> of coordinates for a <code>DisplayObject</code> to be centered on the stage.
+		 * Requires the <code>DisplayObject</code> passed to be on the stage or (0, 0) will be returned.
+		 * @param obj The <code>DisplayObject</code> to be centered.
+		 * @return The <code></code> and <code></code> coordinates for <code>obj</code> to be centered on the stage.
+		 */
+		public static function getCenterOnStage(obj:DisplayObject):Point {
+			var point:Point = new Point();
+			if (obj.stage) {
+				point.x = (obj.stage.stageWidth * 0.5) - (obj.width * 0.5);
+				point.y = (obj.stage.stageHeight * 0.5) - (obj.height * 0.5);
+			}
+			return point;
+		}
+		
+		/**
 		 * Centers a <code>DisplayObject</code> on another <code>DisplayObject</code>.
-		 * 
 		 * @param obj The <code>DisplayObject</code> to be centered.
 		 * @param contain The <code>DisplayObject</code> for <code>obj</code> to be centered on.
 		 */
