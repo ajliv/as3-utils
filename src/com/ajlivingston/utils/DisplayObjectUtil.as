@@ -81,7 +81,7 @@ package com.ajlivingston.utils {
 				// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
 				if ((obj.width / obj.height) <= (obj.stage.stageWidth / obj.stage.stageHeight))
 					scale = obj.stage.stageHeight / (obj.height / obj.scaleY);
-				else if ((obj.width / obj.height) > (obj.stage.stageWidth / obj.stage.stageHeight))
+				else
 					scale = obj.stage.stageWidth / (obj.width / obj.scaleX);
 			}
 			
@@ -130,7 +130,7 @@ package com.ajlivingston.utils {
 				// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
 				if ((obj.width / obj.height) >= (obj.stage.stageWidth / obj.stage.stageHeight))
 					scale = obj.stage.stageHeight / (obj.height / obj.scaleY);
-				else if ((obj.width / obj.height) < (obj.stage.stageWidth / obj.stage.stageHeight))
+				else
 					scale = obj.stage.stageWidth / (obj.width / obj.scaleX);
 			}
 			
@@ -178,7 +178,7 @@ package com.ajlivingston.utils {
 			if (addTo) {
 				if (container is DisplayObjectContainer) {
 					// Set up the index for addChildAt(). By default or addToIndex < 0, use addChld().
-					var index:int = addToIndex
+					var index:int = addToIndex;
 					if (index < 0) 
 						(container as DisplayObjectContainer).addChild(obj);
 					else
@@ -237,12 +237,12 @@ package com.ajlivingston.utils {
 		
 		/**
 		 * Returns a <code>Point</code> of coordinates for a <code>DisplayObject</code> to be centered on the stage.
-		 * Requires the <code>DisplayObject</code> passed to be on the stage or (0, 0) will be returned.
+		 * Requires the <code>DisplayObject</code> passed to be on the stage or its current coordinates will be returned.
 		 * @param obj The <code>DisplayObject</code> to be centered.
-		 * @return The <code></code> and <code></code> coordinates for <code>obj</code> to be centered on the stage.
+		 * @return The <code>Point</code> with the x and y coordinates for <code>obj</code> to be centered on the stage.
 		 */
 		public static function getCenterOnStage(obj:DisplayObject):Point {
-			var point:Point = new Point();
+			var point:Point = new Point(obj.x, obj.y);
 			if (obj.stage) {
 				point.x = (obj.stage.stageWidth * 0.5) - (obj.width * 0.5);
 				point.y = (obj.stage.stageHeight * 0.5) - (obj.height * 0.5);
@@ -252,13 +252,30 @@ package com.ajlivingston.utils {
 		
 		/**
 		 * Centers a <code>DisplayObject</code> on another <code>DisplayObject</code>.
+		 * Not guaranteed to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
 		 * @param obj The <code>DisplayObject</code> to be centered.
 		 * @param contain The <code>DisplayObject</code> for <code>obj</code> to be centered on.
+		 * @see #getCenterOn()
 		 */
-		public static function centerOn(obj:DisplayObject, contain:DisplayObject):void {
-			obj.x = (contain.x + contain.width * 0.5) - (obj.width * 0.5);
-			obj.y = (contain.y + contain.height * 0.5) - (obj.height * 0.5);
+		public static function centerOn(obj:DisplayObject, contain:DisplayObject = null):void {
+			var point:Point = getCenterOn(obj, contain);
+			obj.x = point.x;
+			obj.y = point.y;
 		}
+		
+		/**
+		 * Returns a <code>Point</code> of coordinates for a <code>DisplayObject</code> to be centered on another <code>DisplayObject</code>.
+		 * Not guaranteed to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
+		 * @param obj The <code>DisplayObject</code> to be centered.
+		 * @param contain The <code>DisplayObject</code> for <code>obj</code> to be centered on.
+		 * @return The <code>Point</code> with the x and y coordinates for <code>obj</code> to be centered on <code>contain</code>.
+		 */
+		 public static function getCenterOn(obj:DisplayObject, contain:DisplayObject):Point {
+		 	var point:Point = new Point(obj.x, obj.y);
+		 	point.x = (contain.x + contain.width * 0.5) - (obj.width * 0.5);
+		 	point.y = (contain.y + contain.height * 0.5) - (obj.height * 0.5);
+		 	return point;
+		 }
 		
 	}
 }
