@@ -36,7 +36,7 @@ package com.ajlivingston.display
 	
 	/**
 	 * The <code>MaskImage</code> class is a simple solution for masking a self-loaded image.
-	 * <p>Loads an image from the <code>URLRequest</code> passed in the constructor directly into a mask of the passed dimensions (default: 100x100).</p>
+	 * <p>Loads an image from the <code>URLRequest</code> passed in the constructor as a <code>Bitmap</code> and applies a mask of the passed dimensions (default: 100x100).</p>
 	 * <p>The image can be set to scale to fit or fill (depending on the set <code>MaskImageScaleMode</code>). By default no scaling is applied.</p>
 	 * <p>The image can be set to be centered within the mask. (depending on the set <code>MaskImageAlignMode</code>). By default the image is aligned to the top-left corner of the mask.</p>
 	 * 
@@ -61,8 +61,8 @@ package com.ajlivingston.display
 		 * @param urlRequest The <code>URLRequest</code> for the image to load.
 		 * @param maskWidth The width of the mask.
 		 * @param maskHeight The height of the mask.
-		 * @param scaleMode The way the image is displayed, can accept any <code>MaskImageScaleMode</code>. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
-		 * @param alignMode The way the image is aligned within the box, can accept any <code>MaskImageAlignMode</code>. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
+		 * @param scaleMode The way the image is displayed, can accept any constnt value of the <code>MaskImageScaleMode</code> class. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
+		 * @param alignMode The way the image is aligned within the box, can accept any constant value of the <code>MaskImageAlignMode</code> class. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
 		 * 
 		 * @event Event.COMPLETE Dispatched by the <code>MaskImage</code> when the image is added to the display list after loading.
 		 * 
@@ -70,6 +70,7 @@ package com.ajlivingston.display
 		 * @see MaskImageAlignMode
 		 */
 		public function MaskImage(urlRequest:URLRequest, maskWidth:Number = 100, maskHeight:Number = 100, scaleMode:String = null, alignMode:String = null) {
+			// Set mask width & height.
 			_maskWidth = maskWidth;
 			_maskHeight = maskHeight;
 			
@@ -128,7 +129,7 @@ package com.ajlivingston.display
 				case MaskImageScaleMode.FILL: _scaleMode = value; break;
 				case MaskImageScaleMode.FIT : _scaleMode = value; break;
 				case MaskImageScaleMode.NO_SCALE : _scaleMode = value; break;
-				default : return;
+				default : throw new Error("Invalid value passed to scaleMode."); return;
 			}
 			update();
 		}
@@ -144,9 +145,17 @@ package com.ajlivingston.display
 			switch(value) {
 				case MaskImageAlignMode.CENTER : _alignMode = value; break;
 				case MaskImageAlignMode.TOP_LEFT : _alignMode = value; break;
-				default : return;
+				default : throw new Error("Invalid value passed to alignMode."); return;
 			}
 			update();
+		}
+		
+		/**
+		 * The image. Returns a clone of the <code>Bitmap</code>.
+		 */
+		public function get bitmap():Bitmap {
+			var bitmap:Bitmap = new Bitmap(_bitmap.bitmapData.clone());
+			return bitmap;
 		}
 		
 		/**
@@ -161,15 +170,22 @@ package com.ajlivingston.display
 		}
 		
 		private function update():void {
+			// Draw mask.
 			_mask.graphics.clear();
 			_mask.graphics.beginFill(0);
 			_mask.graphics.drawRect(0, 0, _maskWidth, _maskHeight);
 			
-			// Scale and center based on set modes.
+			// Scale and Align based on set modes.
 			switch(_scaleMode) {
-				case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, (_alignMode == MaskImageAlignMode.CENTER)); break;
-				case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, (_alignMode == MaskImageAlignMode.CENTER)); break;
-				default : if(_alignMode == MaskImageAlignMode.CENTER) DisplayObjectUtil.centerOn(_bitmap, _mask); break;
+				case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, false); break;
+				case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, false); break;
+				case MaskImageScaleMode.NO_SCALE : _bitmap.scaleX=0; _bitmap.scaleY=0; break;
+				default : break;
+			}
+			switch(_alignMode) {
+				case MaskImageAlignMode.CENTER : DisplayObjectUtil.centerOn(_bitmap, _mask); break;
+				case MaskImageAlignMode.TOP_LEFT : _bitmap.x=0; _bitmap.y=0; break;
+				default : break;
 			}
 		}
 		

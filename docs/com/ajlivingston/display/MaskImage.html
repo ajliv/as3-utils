@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="MaskImage,com.ajlivingston.display.MaskImage,maskHeight,maskWidth,setMaskSize" name="keywords">
+<meta content="MaskImage,com.ajlivingston.display.MaskImage,alignMode,bitmap,maskHeight,maskWidth,scaleMode,setMaskSize" name="keywords">
 <title>com.ajlivingston.display.MaskImage</title>
 </head>
 <body>
@@ -43,7 +43,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </table>
 <p></p>
   The <code>MaskImage</code> class is a simple solution for masking a self-loaded image.
-  <p>Loads an image from the <code>URLRequest</code> passed in the constructor directly into a mask of the passed dimensions (default: 100x100).</p>
+  <p>Loads an image from the <code>URLRequest</code> passed in the constructor as a <code>Bitmap</code> and applies a mask of the passed dimensions (default: 100x100).</p>
   <p>The image can be set to scale to fit or fill (depending on the set <code>MaskImageScaleMode</code>). By default no scaling is applied.</p>
   <p>The image can be set to be centered within the mask. (depending on the set <code>MaskImageAlignMode</code>). By default the image is aligned to the top-left corner of the mask.</p>
   
@@ -69,6 +69,16 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alignMode">alignMode</a> : String<div class="summaryTableDescription">
+   The image's alignment to the mask.</div>
+</td><td class="summaryTableOwnerCol">MaskImage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#bitmap">bitmap</a> : Bitmap<div class="summaryTableDescription">[read-only]
+   The image.</div>
+</td><td class="summaryTableOwnerCol">MaskImage</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maskHeight">maskHeight</a> : Number<div class="summaryTableDescription">
    The mask's height.</div>
 </td><td class="summaryTableOwnerCol">MaskImage</td>
@@ -76,6 +86,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#maskWidth">maskWidth</a> : Number<div class="summaryTableDescription">
    The mask's width.</div>
+</td><td class="summaryTableOwnerCol">MaskImage</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#scaleMode">scaleMode</a> : String<div class="summaryTableDescription">
+   The image's scaling mode.</div>
 </td><td class="summaryTableOwnerCol">MaskImage</td>
 </tr>
 </table>
@@ -112,10 +127,46 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="alignMode"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alignMode</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>alignMode:String</code>&nbsp;&nbsp;[read-write]<p>
+   The image's alignment to the mask. Accepts any constant value of the <code>MaskImageAlignMode</code> class/
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alignMode():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alignMode(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="MaskImageAlignMode.html" target="">MaskImageAlignMode</a>
+</div>
+</div>
+<a name="bitmap"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">bitmap</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>bitmap:Bitmap</code>&nbsp;&nbsp;[read-only]<p>
+   The image. Returns a clone of the <code>Bitmap</code>.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get bitmap():Bitmap</code>
+<br>
+</div>
 <a name="maskHeight"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">maskHeight</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">maskHeight</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -143,6 +194,28 @@ showHideInherited();
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set maskWidth(value:Number):void</code>
 <br>
+</div>
+<a name="scaleMode"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">scaleMode</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>scaleMode:String</code>&nbsp;&nbsp;[read-write]<p>
+   The image's scaling mode. Accepts any constant value of the <code>MaskImageScaleMode</code> class.
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get scaleMode():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set scaleMode(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="MaskImageScaleMode.html" target="">MaskImageScaleMode</a>
+</div>
 </div>
 <a name="constructorDetail"></a>
 <div class="detailSectionHeader">Constructor detail</div>
@@ -180,14 +253,14 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">scaleMode</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The way the image is displayed, can accept any <code>MaskImageScaleMode</code>. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
+<td width="20px"></td><td><code><span class="label">scaleMode</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The way the image is displayed, can accept any constnt value of the <code>MaskImageScaleMode</code> class. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">alignMode</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The way the image is aligned within the box, can accept any <code>MaskImageAlignMode</code>. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
+<td width="20px"></td><td><code><span class="label">alignMode</span>:String</code> (default = <code>null</code>)<code></code> &mdash; The way the image is aligned within the box, can accept any constant value of the <code>MaskImageAlignMode</code> class. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
    
    </td>
 </tr>
