@@ -47,6 +47,7 @@ package com.ajlivingston.display
 	 */
 	public class MaskImage extends Sprite
 	{
+		private var _loader:Loader;
 		private var _bitmap:Bitmap;
 		private var _mask:Shape;
 		private var _maskWidth:Number;
@@ -88,9 +89,9 @@ package com.ajlivingston.display
 			_mask = new Shape();
 			this.addChild(_mask);
 			
-			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
-			loader.load(urlRequest);
+			_loader = new Loader();
+			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+			_loader.load(urlRequest);
 		}
 		
 		/**
@@ -128,7 +129,7 @@ package com.ajlivingston.display
 		
 		private function update():void {
 			_mask.graphics.clear();
-			_mask.graphics.beginFill(0,0);
+			_mask.graphics.beginFill(0);
 			_mask.graphics.drawRect(0, 0, _maskWidth, _maskHeight);
 			
 			// Scale and center based on set modes.
@@ -140,12 +141,14 @@ package com.ajlivingston.display
 		}
 		
 		private function onComplete(event:Event):void {
-			(event.target as Loader).contentLoaderInfo.removeEventListener(Event.COMPLETE, onComplete);
-			_bitmap = Bitmap((event.target as Loader).content);
+			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onComplete);
+			_bitmap = Bitmap(_loader.content);
+			_bitmap.smoothing = true;
 			_bitmap.mask = _mask;
 			this.addChild(_bitmap);
 			update();
-			
+			_loader.unload();
+			_loader = null;
 			this.dispatchEvent(new Event(Event.COMPLETE));
 		}
 		
