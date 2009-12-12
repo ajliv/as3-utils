@@ -117,6 +117,39 @@ package com.ajlivingston.display
 		}
 		
 		/**
+		 * The image's scaling mode. Accepts any constant value of the <code>MaskImageScaleMode</code> class.
+		 * @see MaskImageScaleMode
+		 */
+		public function get scaleMode():String {
+			return _scaleMode;
+		}
+		public function set scaleMode(value:String):void {
+			switch(value) {
+				case MaskImageScaleMode.FILL: _scaleMode = value; break;
+				case MaskImageScaleMode.FIT : _scaleMode = value; break;
+				case MaskImageScaleMode.NO_SCALE : _scaleMode = value; break;
+				default : return;
+			}
+			update();
+		}
+		
+		/**
+		 * The image's alignment to the mask. Accepts any constant value of the <code>MaskImageAlignMode</code> class/
+		 * @see MaskImageAlignMode
+		 */
+		public function get alignMode():String {
+			return _alignMode;
+		}
+		public function set alignMode(value:String):void {
+			switch(value) {
+				case MaskImageAlignMode.CENTER : _alignMode = value; break;
+				case MaskImageAlignMode.TOP_LEFT : _alignMode = value; break;
+				default : return;
+			}
+			update();
+		}
+		
+		/**
 		 * Sets both the width and height of the mask at once.
 		 * 
 		 * @param size A <code>Point</code> object where (x, y) is used as (width, height).
@@ -134,19 +167,22 @@ package com.ajlivingston.display
 			
 			// Scale and center based on set modes.
 			switch(_scaleMode) {
-				case MaskImageScaleMode.FILL : DisplayObjectUtil.scaleToFill(_bitmap, _mask, (_alignMode == MaskImageAlignMode.CENTER)); break;
+				case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, (_alignMode == MaskImageAlignMode.CENTER)); break;
 				case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, (_alignMode == MaskImageAlignMode.CENTER)); break;
-				default : break;
+				default : if(_alignMode == MaskImageAlignMode.CENTER) DisplayObjectUtil.centerOn(_bitmap, _mask); break;
 			}
 		}
 		
 		private function onComplete(event:Event):void {
-			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onComplete);
+			// Create the bitmap, apply mask and update.
 			_bitmap = Bitmap(_loader.content);
 			_bitmap.smoothing = true;
 			_bitmap.mask = _mask;
 			this.addChild(_bitmap);
 			update();
+			
+			// Ditch the loader, dispatch Complete event.
+			_loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onComplete);
 			_loader.unload();
 			_loader = null;
 			this.dispatchEvent(new Event(Event.COMPLETE));
