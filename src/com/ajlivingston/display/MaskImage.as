@@ -7,6 +7,7 @@ package com.ajlivingston.display
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.net.URLRequest;
 
 	/*
@@ -54,11 +55,15 @@ package com.ajlivingston.display
 		private var _alignMode:String;
 		
 		/**
-		 * @param urlRequest the <code>URLRequest</code> for the image to load.
-		 * @param boxWidth the width of the mask.
-		 * @param boxHeight the height of the mask.
-		 * @param scaleMode the way the image is displayed, can accept any <code>MaskImageScaleMode</code>. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
-		 * @param alignMode the way the image is aligned within the box, can accept any <code>MaskImageAlignMode</code>. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
+		 * Creates a new MaskImage instance.
+		 * 
+		 * @param urlRequest The <code>URLRequest</code> for the image to load.
+		 * @param maskWidth The width of the mask.
+		 * @param maskHeight The height of the mask.
+		 * @param scaleMode The way the image is displayed, can accept any <code>MaskImageScaleMode</code>. By default is <code>MaskImageAlignMode.NO_SCALE</code>.
+		 * @param alignMode The way the image is aligned within the box, can accept any <code>MaskImageAlignMode</code>. By default is <code>MaskImageAlignMode.TOP_LEFT</code>.
+		 * 
+		 * @event Event.COMPLETE Dispatched by the <code>MaskImage</code> when the image is added to the display list after loading.
 		 * 
 		 * @see MaskImageScaleMode
 		 * @see MaskImageAlignMode
@@ -107,6 +112,17 @@ package com.ajlivingston.display
 		}
 		public function set maskHeight(value:Number):void {
 			_maskHeight = value;
+			update();
+		}
+		
+		/**
+		 * Sets both the width and height of the mask at once.
+		 * 
+		 * @param size A <code>Point</code> object where (x, y) is used as (width, height).
+		 */
+		public function setMaskSize(size:Point):void {
+			_maskWidth = size.x;
+			_maskHeight = size.y;
 			update();
 		}
 		
