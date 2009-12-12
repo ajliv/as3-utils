@@ -211,13 +211,96 @@ package com.ajlivingston.utils {
 					return scale;
 				}
 			}
-			// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
+			// Check to see if obj's ratio is wider or taller than container, set scale accordingly.
 			if ((obj.width / obj.height) <= (container.width / container.height))
 				scale = container.height / (obj.height / obj.scaleY);
 			else 
 				scale = container.width / (obj.width / obj.scaleX);
 				
 			return scale;
+		 }
+		 
+		 /**
+		 * Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.
+		 * 
+		 * @param obj The <code>DisplayObject</code> to be scaled.
+		 * @param contain The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+		 * @param center Whether or not the scaled <code>DisplayObject</code> is to be centered within the container <code>DisplayObject</code>. Default is true.
+		 * @param addTo If true, add <code>obj</code> as a child of <code>contain</code> at the <code>addToIndex</code> parameter's value. 
+		 * 	The <code>contain</code> parameter must be passed a <code>DisplayObjectContainer</code>.
+		 * @param addToIndex The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as <code>true</code>.
+		 * 	The <code>obj</code> will be added at the top(default) if less than 0.
+		 * 
+		 * @see #centerOn()
+		 * @see #getScaleToFill()
+		 */
+		 public static function scaleToFill(obj:DisplayObject, contain:DisplayObject, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void {
+		 	var container:DisplayObject = contain;
+			// If container is null, try and set it to obj's parent. Else, throw Error and return.
+			if (!container) {
+				if (obj.parent) {
+					container = obj.parent;
+				}
+				else {
+					throw new Error("The obj parameter must have a parent if contain is null.");
+					return;
+				}
+			}
+			// Get scale amount.
+			var scale:Number = getScaleToFill(obj, container);
+			
+			// Set the scaleX and scaleY properties.
+			obj.scaleX = scale;
+			obj.scaleY = scale;
+			
+			// If center is true, center obj on container.
+			if (center) centerOn(obj, container);
+			
+			// If true is passed to the addTo param, add obj to contain at the index passed for the addToAt param.
+			// contain MUST be a DisplayObjectContainer or else throw an Error.
+			if (addTo) {
+				if (container is DisplayObjectContainer) {
+					// Set up the index for addChildAt(). By default or addToIndex < 0, use addChld().
+					var index:int = addToIndex;
+					if (index < 0) 
+						(container as DisplayObjectContainer).addChild(obj);
+					else
+						(container as DisplayObjectContainer).addChildAt(obj, index);
+				}
+				else {
+					throw new Error("Must pass a DisplayObjectContainer to the contain parameter in order to add obj as a child.");
+				}
+			}
+		 }
+		 
+		 /**
+		 * Returns the scale amount for a <code>DisplayObject</code> to fill another <code>DisplayObject</code>. Useful for tweening.
+		 * 
+		 * @param obj The <code>DisplayObject</code> to be scaled.
+		 * @param contain The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+		 * 
+		 * @return The value to be applied to the <code>scaleX</code> and/or <code>scaleY</code> properties. Will return <code>obj</code>'s current <code>scaleX</code> property if <code>contain</code> is invalid.
+		 */
+		 public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject):Number {
+		 	var scale:Number = obj.scaleX;
+		 	var container:DisplayObject = contain;
+			// If container is null, try and set it to obj's parent. Else, throw Error and return.
+			if (!container) {
+				if (obj.parent) {
+					container = obj.parent;
+				}
+				else {
+					throw new Error("The obj parameter must have a parent if contain is null.");
+					return scale;
+				}
+			}
+			// Check to see if obj's ratio is wider or taller than the stage, set scale accordingly.
+			if ((obj.width / obj.height) >= (container.width / container.height))
+				scale = container.height / (obj.height / obj.scaleY);
+			else 
+				scale = container.width / (obj.width / obj.scaleX);
+		 	
+		 	return scale;
 		 }
 		
 		
