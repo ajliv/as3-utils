@@ -179,7 +179,7 @@ package com.ajlivingston.display
 			switch(_scaleMode) {
 				case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, false); break;
 				case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, false); break;
-				case MaskImageScaleMode.NO_SCALE : _bitmap.scaleX=0; _bitmap.scaleY=0; break;
+				case MaskImageScaleMode.NO_SCALE : _bitmap.scaleX=1; _bitmap.scaleY=1; break;
 				default : break;
 			}
 			switch(_alignMode) {
