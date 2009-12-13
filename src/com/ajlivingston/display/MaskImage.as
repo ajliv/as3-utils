@@ -176,16 +176,18 @@ package com.ajlivingston.display
 			_mask.graphics.drawRect(0, 0, _maskWidth, _maskHeight);
 			
 			// Scale and Align based on set modes.
-			switch(_scaleMode) {
-				case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, false); break;
-				case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, false); break;
-				case MaskImageScaleMode.NO_SCALE : _bitmap.scaleX=1; _bitmap.scaleY=1; break;
-				default : break;
-			}
-			switch(_alignMode) {
-				case MaskImageAlignMode.CENTER : DisplayObjectUtil.centerOn(_bitmap, _mask); break;
-				case MaskImageAlignMode.TOP_LEFT : _bitmap.x=0; _bitmap.y=0; break;
-				default : break;
+			if(_bitmap && _mask) {
+				switch(_scaleMode) {
+					case MaskImageScaleMode.FILL: DisplayObjectUtil.scaleToFill(_bitmap, _mask, false); break;
+					case MaskImageScaleMode.FIT : DisplayObjectUtil.scaleToFit(_bitmap, _mask, false); break;
+					case MaskImageScaleMode.NO_SCALE : _bitmap.scaleX=1; _bitmap.scaleY=1; break;
+					default : break;
+				}
+				switch(_alignMode) {
+					case MaskImageAlignMode.CENTER : DisplayObjectUtil.centerOn(_bitmap, _mask); break;
+					case MaskImageAlignMode.TOP_LEFT : _bitmap.x=0; _bitmap.y=0; break;
+					default : break;
+				}
 			}
 		}
 		

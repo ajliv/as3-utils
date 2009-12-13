@@ -234,7 +234,7 @@ package com.ajlivingston.utils {
 		 * @see #centerOn()
 		 * @see #getScaleToFill()
 		 */
-		 public static function scaleToFill(obj:DisplayObject, contain:DisplayObject, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void {
+		 public static function scaleToFill(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void {
 		 	var container:DisplayObject = contain;
 			// If container is null, try and set it to obj's parent. Else, throw Error and return.
 			if (!container) {
@@ -281,7 +281,7 @@ package com.ajlivingston.utils {
 		 * 
 		 * @return The value to be applied to the <code>scaleX</code> and/or <code>scaleY</code> properties. Will return <code>obj</code>'s current <code>scaleX</code> property if <code>contain</code> is invalid.
 		 */
-		 public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject):Number {
+		 public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject = null):Number {
 		 	var scale:Number = obj.scaleX;
 		 	var container:DisplayObject = contain;
 			// If container is null, try and set it to obj's parent. Else, throw Error and return.

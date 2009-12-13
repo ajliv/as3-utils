@@ -86,7 +86,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getScaleToFill()">getScaleToFill</a>(obj:DisplayObject, contain:DisplayObject):Number</div>
+<a class="signatureLink" href="#getScaleToFill()">getScaleToFill</a>(obj:DisplayObject, contain:DisplayObject = null):Number</div>
 <div class="summaryTableDescription">[static]
    Returns the scale amount for a <code>DisplayObject</code> to fill another <code>DisplayObject</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -118,7 +118,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFill()">scaleToFill</a>(obj:DisplayObject, contain:DisplayObject, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</div>
+<a class="signatureLink" href="#scaleToFill()">scaleToFill</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -277,7 +277,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject):Number</code><p>
+<code>public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject = null):Number</code><p>
    Returns the scale amount for a <code>DisplayObject</code> to fill another <code>DisplayObject</code>. Useful for tweening.
    
    </p><span class="label">Parameters</span>
@@ -290,7 +290,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
    
    </td>
 </tr>
@@ -401,7 +401,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFill(obj:DisplayObject, contain:DisplayObject, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</code><p>
+<code>public static function scaleToFill(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</code><p>
    Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.
    
    </p><span class="label">Parameters</span>
@@ -414,7 +414,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
    </td>
 </tr>
 <tr>
