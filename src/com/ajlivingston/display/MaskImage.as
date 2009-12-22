@@ -88,7 +88,6 @@ package com.ajlivingston.display
 			
 			// Set up the mask.
 			_mask = new Shape();
-			this.addChild(_mask);
 			
 			_loader = new Loader();
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
@@ -196,6 +195,7 @@ package com.ajlivingston.display
 			_bitmap = Bitmap(_loader.content);
 			_bitmap.smoothing = true;
 			_bitmap.mask = _mask;
+			this.addChild(_mask);
 			this.addChild(_bitmap);
 			update();
 			
