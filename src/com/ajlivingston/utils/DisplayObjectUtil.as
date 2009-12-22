@@ -43,7 +43,7 @@ package com.ajlivingston.utils {
 		
 		/**
 		 * Scales a <code>DisplayObject</code> to fit the stage.
-		 * Requires the <code>DisplayObject</code> to be on the stage for any results.
+		 * Requires the <code>DisplayObject</code> to be on the stage.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
 		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well.
@@ -63,6 +63,7 @@ package com.ajlivingston.utils {
 				// Center obj on the stage if center is set to true.
 				if(center) centerOnStage(obj);
 			}
+			else throw new Error("The DisplayObject must be on the Stage.");
 		}
 		
 		/**
@@ -91,7 +92,7 @@ package com.ajlivingston.utils {
 		/**
 		 * Scales a <code>DisplayObject</code> to fill the entire stage.
 		 * Unless ratio is exact to the stage, parts of the <code>DisplayObject</code> will be hidden off-stage.
-		 * Requires the <code>DisplayObject</code> passed to be on the stage for any results.
+		 * Requires the <code>DisplayObject</code> passed to be on the stage.
 		 * 
 		 * @param obj The <code>DisplayObject</code> to be scaled.
 		 * @param center Whether or not the <code>DisplayObject</code> is centered on the stage as well.
@@ -112,6 +113,7 @@ package com.ajlivingston.utils {
 				if(center) 
 					centerOnStage(obj);
 		 	}
+		 	else throw new Error("The DisplayObject must be on the Stage.");
 		 }
 		 
 		 /**
