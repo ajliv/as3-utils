@@ -22,7 +22,6 @@ package com.ajlivingston.utils {
 		
 		/**
 		 * Centers a DisplayObject on another DisplayObject.
-		 * Not guaranteed(yet) to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
 		 * 
 		 * @param obj The DisplayObject to be centered.
 		 * @param contain The DisplayObject for <code>obj</code> to be centered on.
@@ -263,7 +262,6 @@ package com.ajlivingston.utils {
 		 
 		 /**
 		 * Returns a Point of coordinates for a DisplayObject to be centered on another DisplayObject.
-		 * Not guaranteed(yet) to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
 		 * 
 		 * @param obj The DisplayObject to be centered.
 		 * @param contain The DisplayObject for <code>obj</code> to be centered on.
@@ -272,10 +270,12 @@ package com.ajlivingston.utils {
 		 public static function getCenterOn(obj:DisplayObject, contain:DisplayObject):Point {
 		 	var object:DisplayObject = obj;
 		 	var container:DisplayObject = contain;
-		 	var point:Point = new Point(object.x, object.y);
-		 	point.x = (container.x + container.width * 0.5) - (object.width * 0.5);
-		 	point.y = (container.y + container.height * 0.5) - (object.height * 0.5);
-		 	return point;
+		 	var containPoint:Point = container.localToGlobal(new Point(container.x, container.y));
+		 	var objectPoint:Point = new Point(
+		 		(containPoint.x + container.width*0.5) - (object.width*0.5),
+		 		(containPoint.y + container.height*0.5) - (object.height*0.5) );
+		 	
+		 	return object.globalToLocal(objectPoint);
 		 }
 		 
 		 
