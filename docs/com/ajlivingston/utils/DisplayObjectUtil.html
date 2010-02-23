@@ -54,7 +54,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#centerOn()">centerOn</a>(obj:DisplayObject, contain:DisplayObject = null):void</div>
+<a class="signatureLink" href="#centerOn()">centerOn</a>(obj:DisplayObject, contain:DisplayObject):void</div>
 <div class="summaryTableDescription">[static]
    Centers a <code>DisplayObject</code> on another <code>DisplayObject</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -62,7 +62,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#centerOnStage()">centerOnStage</a>(obj:DisplayObject):void</div>
+<a class="signatureLink" href="#centerOnStage()">centerOnStage</a>(obj:DisplayObject):Boolean</div>
 <div class="summaryTableDescription">[static]
    Centers a <code>DisplayObject</code> on the stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -118,7 +118,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFill()">scaleToFill</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</div>
+<a class="signatureLink" href="#scaleToFill()">scaleToFill</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -126,7 +126,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFillStage()">scaleToFillStage</a>(obj:DisplayObject, center:Boolean = true):void</div>
+<a class="signatureLink" href="#scaleToFillStage()">scaleToFillStage</a>(obj:DisplayObject, center:Boolean = true):Boolean</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fill the entire stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -134,7 +134,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFit()">scaleToFit</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</div>
+<a class="signatureLink" href="#scaleToFit()">scaleToFit</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fit another <code>DisplayObjct</code>.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -142,7 +142,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#scaleToFitStage()">scaleToFitStage</a>(obj:DisplayObject, center:Boolean = true):void</div>
+<a class="signatureLink" href="#scaleToFitStage()">scaleToFitStage</a>(obj:DisplayObject, center:Boolean = true):Boolean</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fit the stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
@@ -163,7 +163,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function centerOn(obj:DisplayObject, contain:DisplayObject = null):void</code><p>
+<code>public static function centerOn(obj:DisplayObject, contain:DisplayObject):void</code><p>
    Centers a <code>DisplayObject</code> on another <code>DisplayObject</code>.
    Not guaranteed to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
    </p><span class="label">Parameters</span>
@@ -176,7 +176,7 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The <code>DisplayObject</code> for <code>obj</code> to be centered on.
+<td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> for <code>obj</code> to be centered on.
    </td>
 </tr>
 </table>
@@ -194,13 +194,21 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function centerOnStage(obj:DisplayObject):void</code><p>
+<code>public static function centerOnStage(obj:DisplayObject):Boolean</code><p>
    Centers a <code>DisplayObject</code> on the stage.
    Requires the <code>DisplayObject</code> passed to be on the stage for any results.
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; The <code>DisplayObject<code> to be centered.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Returns <code>true</code> or <code>false</code> based on the method's success.
    </td>
 </tr>
 </table>
@@ -319,7 +327,6 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> used to calculate return value.
-   
    </td>
 </tr>
 </table>
@@ -353,7 +360,6 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
-   
    </td>
 </tr>
 </table>
@@ -381,7 +387,6 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> used to calculate return value.
-   
    </td>
 </tr>
 </table>
@@ -401,7 +406,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFill(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</code><p>
+<code>public static function scaleToFill(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean</code><p>
    Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.
    
    </p><span class="label">Parameters</span>
@@ -438,8 +443,14 @@ showHideInherited();
 <tr>
 <td width="20px"></td><td><code><span class="label">addToIndex</span>:int</code> (default = <code>-1</code>)<code></code> &mdash; The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as <code>true</code>.
     The <code>obj</code> will be added at the top(default) if less than 0.
-   
    </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code></td>
 </tr>
 </table>
 <p>
@@ -458,7 +469,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFillStage(obj:DisplayObject, center:Boolean = true):void</code><p>
+<code>public static function scaleToFillStage(obj:DisplayObject, center:Boolean = true):Boolean</code><p>
    Scales a <code>DisplayObject</code> to fill the entire stage.
    Unless ratio is exact to the stage, parts of the <code>DisplayObject</code> will be hidden off-stage.
    Requires the <code>DisplayObject</code> passed to be on the stage.
@@ -474,7 +485,14 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">center</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; Whether or not the <code>DisplayObject</code> is centered on the stage as well.
-   
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Returns <code>true</code> or <code>false</code> based on the method's success.
    </td>
 </tr>
 </table>
@@ -494,7 +512,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFit(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):void</code><p>
+<code>public static function scaleToFit(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean</code><p>
    Scales a <code>DisplayObject</code> to fit another <code>DisplayObjct</code>.
    
    </p><span class="label">Parameters</span>
@@ -531,7 +549,14 @@ showHideInherited();
 <tr>
 <td width="20px"></td><td><code><span class="label">addToIndex</span>:int</code> (default = <code>-1</code>)<code></code> &mdash; The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as <code>true</code>.
     The <code>obj</code> will be added at the top(default) if less than 0.
-   
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Returns <code>true</code> or <code>false</code> based on the method's success.
    </td>
 </tr>
 </table>
@@ -551,7 +576,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public static function scaleToFitStage(obj:DisplayObject, center:Boolean = true):void</code><p>
+<code>public static function scaleToFitStage(obj:DisplayObject, center:Boolean = true):Boolean</code><p>
    Scales a <code>DisplayObject</code> to fit the stage.
    Requires the <code>DisplayObject</code> to be on the stage.
    
@@ -566,7 +591,14 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">center</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; Whether or not the <code>DisplayObject</code> is centered on the stage as well.
-   
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Returns <code>true</code> or <code>false</code> based on the method's success.
    </td>
 </tr>
 </table>
