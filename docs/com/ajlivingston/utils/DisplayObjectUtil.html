@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../print.css" type="text/css" media="print">
-<meta content="DisplayObjectUtil,com.ajlivingston.utils.DisplayObjectUtil,centerOn,centerOnStage,getCenterOn,getCenterOnStage,getScaleToFill,getScaleToFillStage,getScaleToFit,getScaleToFitStage,scaleToFill,scaleToFillStage,scaleToFit,scaleToFitStage" name="keywords">
+<meta content="DisplayObjectUtil,com.ajlivingston.utils.DisplayObjectUtil,centerOn,centerOnStage,getCenterOn,getCenterOnStage,getScaleToFill,getScaleToFillStage,getScaleToFit,getScaleToFitStage,getStretchToFillStage,scaleToFill,scaleToFillStage,scaleToFit,scaleToFitStage,stretchToFillStage" name="keywords">
 <title>com.ajlivingston.utils.DisplayObjectUtil</title>
 </head>
 <body>
@@ -118,6 +118,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
+<a class="signatureLink" href="#getStretchToFillStage()">getStretchToFillStage</a>(obj:DisplayObject):Point</div>
+<div class="summaryTableDescription">[static]
+   Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage.</div>
+</td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
 <a class="signatureLink" href="#scaleToFill()">scaleToFill</a>(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean</div>
 <div class="summaryTableDescription">[static]
    Scales a <code>DisplayObject</code> to fill another <code>DisplayObjct</code>.</div>
@@ -147,6 +155,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    Scales a <code>DisplayObject</code> to fit the stage.</div>
 </td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
 </tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#stretchToFillStage()">stretchToFillStage</a>(obj:DisplayObject, center:Boolean = true):Boolean</div>
+<div class="summaryTableDescription">[static]
+   Scales a <code>DisplayObject</code> to stretch to fill the entire stage.</div>
+</td><td class="summaryTableOwnerCol">DisplayObjectUtil</td>
+</tr>
 </table>
 </div>
 <script type="text/javascript" language="javascript">
@@ -166,6 +182,7 @@ showHideInherited();
 <code>public static function centerOn(obj:DisplayObject, contain:DisplayObject):void</code><p>
    Centers a <code>DisplayObject</code> on another <code>DisplayObject</code>.
    Not guaranteed to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -197,6 +214,7 @@ showHideInherited();
 <code>public static function centerOnStage(obj:DisplayObject):Boolean</code><p>
    Centers a <code>DisplayObject</code> on the stage.
    Requires the <code>DisplayObject</code> passed to be on the stage for any results.
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -229,6 +247,7 @@ showHideInherited();
 <code>public static function getCenterOn(obj:DisplayObject, contain:DisplayObject):Point</code><p>
    Returns a <code>Point</code> of coordinates for a <code>DisplayObject</code> to be centered on another <code>DisplayObject</code>.
    Not guaranteed to work correctly with parent-child relationships between <code>obj</code> and <code>contain</code>.
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -262,6 +281,7 @@ showHideInherited();
 <code>public static function getCenterOnStage(obj:DisplayObject):Point</code><p>
    Returns a <code>Point</code> of coordinates for a <code>DisplayObject</code> to be centered on the stage.
    Requires the <code>DisplayObject</code> passed to be on the stage or its current coordinates will be returned.
+   
    </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
@@ -299,7 +319,6 @@ showHideInherited();
 </tr>
 <tr>
 <td width="20px"></td><td><code><span class="label">contain</span>:DisplayObject</code> (default = <code>null</code>)<code></code> &mdash; The <code>DisplayObject</code> to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
-   
    </td>
 </tr>
 </table>
@@ -395,6 +414,33 @@ showHideInherited();
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
 <td width="20"></td><td><code>Number</code> &mdash; The value to be applied to the <code>scaleX</code> and/or <code>scaleY</code> properties.
+   </td>
+</tr>
+</table>
+</div>
+<a name="getStretchToFillStage()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">getStretchToFillStage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function getStretchToFillStage(obj:DisplayObject):Point</code><p>
+   Returns the scale amount for a <code>DisplayObject</code> to fill the entire stage. Useful for tweening.
+   Requires the <code>DisplayObject</code> to be on the stage or else the current scale properties will be returned.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> used to calculate return value.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Point</code> &mdash; The value to be applied to the <code>scaleX</code> and/or <code>scaleY</code> properties.
    </td>
 </tr>
 </table>
@@ -609,6 +655,48 @@ showHideInherited();
 <a href="../utils/DisplayObjectUtil.html#centerOnStage()" target="">centerOnStage()</a>
 <br>
 <a href="../utils/DisplayObjectUtil.html#getScaleToFitStage()" target="">getScaleToFitStage()</a>
+</div>
+</div>
+<a name="stretchToFillStage()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">stretchToFillStage</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public static function stretchToFillStage(obj:DisplayObject, center:Boolean = true):Boolean</code><p>
+   Scales a <code>DisplayObject</code> to stretch to fill the entire stage.
+   Requires the <code>DisplayObject</code> passed to be on the stage.
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">obj</span>:DisplayObject</code> &mdash; The <code>DisplayObject</code> to be scaled.
+   </td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">center</span>:Boolean</code> (default = <code>true</code>)<code></code> &mdash; Whether or not the <code>DisplayObject</code> is centered on the stage as well.
+   </td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Boolean</code> &mdash; Returns <code>true</code> or <code>false</code> based on the method's success.
+   </td>
+</tr>
+</table>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../utils/DisplayObjectUtil.html#getStretchToFillStage()" target="">getStretchToFillStage()</a>
+<br>
+<a href="../utils/DisplayObjectUtil.html#centerOnStage()" target="">centerOnStage()</a>
 </div>
 </div>
 <br>
