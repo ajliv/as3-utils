@@ -9,7 +9,6 @@ package com.ajlivingston.utils {
 	 * @author AJ Livingston
 	 */
 	public class DisplayObjectUtil {
-		
 		/**
 		 * @private
 		 */
@@ -59,6 +58,7 @@ package com.ajlivingston.utils {
 		
 		/**
 		 * Scales a DisplayObject to fill another DisplayObjct.
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
 		 * 
 		 * @param obj The DisplayObject to be scaled.
 		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
@@ -86,23 +86,18 @@ package com.ajlivingston.utils {
 			}
 			// Get scale amount.
 			var scale:Point = getScaleToFill(object, container, preserveRatio);
-			
 			// Set the scaleX and scaleY properties.
 			object.scaleX = scale.x;
 			object.scaleY = scale.y;
-			
 			// If center is true, center obj on container.
 			if (center) centerOn(object, container);
-			
 			// If true is passed to the addTo param, add obj to contain at the index passed for the addToAt param.
 			// contain MUST be a DisplayObjectContainer or else throw an Error.
 			if (addTo) {
 				if (container is DisplayObjectContainer) {
 					// Set up the index for addChildAt(). By default (addToIndex < 0), use addChld().
-					if (addToIndex < 0) 
-						(container as DisplayObjectContainer).addChild(object);
-					else
-						(container as DisplayObjectContainer).addChildAt(object, addToIndex);
+					if (addToIndex < 0) (container as DisplayObjectContainer).addChild(object);
+					else (container as DisplayObjectContainer).addChildAt(object, addToIndex);
 				} else {
 					throw new Error("Must pass a DisplayObjectContainer to the contain parameter in order to add obj as a child.");
 					return false;
@@ -129,14 +124,11 @@ package com.ajlivingston.utils {
 		 	if(object.stage) {
 		 		// Scale amount to apply.
 				var scale:Point = getScaleToFillStage(object, preserveRatio);
-					
 				// Set the scaleX and scaleY properties.
 				object.scaleX = scale.x;
 				object.scaleY = scale.y;
-				
 				// Center obj on the stage if center is set to true.
-				if(center) 
-					centerOnStage(object);					
+				if(center) centerOnStage(object);					
 		 	} else {
 		 		throw new Error("The DisplayObject must be on the Stage.");
 		 		return false;
@@ -147,6 +139,7 @@ package com.ajlivingston.utils {
 		 
 		 /**
 		 * Scales a DisplayObject to fit another DisplayObjct.
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
 		 * 
 		 * @param obj The DisplayObject to be scaled.
 		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
@@ -174,23 +167,18 @@ package com.ajlivingston.utils {
 			}
 			// Get scale amount.
 			var scale:Point = getScaleToFit(object, container, preserveRatio);
-			
 			// Set the scaleX and scaleY properties.
 			object.scaleX = scale.y;
 			object.scaleY = scale.x;
-			
 			// If center is true, center obj on container.
 			if (center) centerOn(object, container);
-			
 			// If true is passed to the addTo param, add obj to contain at the index passed for the addToAt param.
 			// contain MUST be a DisplayObjectContainer or else throw an Error.
 			if (addTo) {
 				if (container is DisplayObjectContainer) {
 					// Set up the index for addChildAt(). By default (addToIndex < 0), use addChld().
-					if (addToIndex < 0) 
-						(container as DisplayObjectContainer).addChild(object);
-					else
-						(container as DisplayObjectContainer).addChildAt(object, addToIndex);
+					if (addToIndex < 0) (container as DisplayObjectContainer).addChild(object);
+					else (container as DisplayObjectContainer).addChildAt(object, addToIndex);
 				} else {
 					throw new Error("Must pass a DisplayObjectContainer to the contain parameter in order to add obj as a child.");
 					return false;
@@ -216,11 +204,9 @@ package com.ajlivingston.utils {
 			if (object.stage) {
 				// Scale amount to apply.
 				var scale:Point = getScaleToFitStage(object, preserveRatio);
-					
 				// Set the scaleX and scaleY properties.
 				object.scaleX = scale.x;
 				object.scaleY = scale.y;
-				
 				// Center object on the stage if center is set to true.
 				if(center) centerOnStage(object);
 			} else {
@@ -228,6 +214,56 @@ package com.ajlivingston.utils {
 				return false;
 			}
 			return true;
+		 }
+		 
+		 
+		 /**
+		 * Scales a DisplayObject to stretch to fill another DisplayObject entirely. 
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
+		 * 
+		 * @param obj The DisplayObject to be scaled.
+		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+		 * @param center Whether or not the DisplayObject is centered on the stage as well.
+		 * @param addTo If true, add <code>obj</code> as a child of <code>contain</code> at the <code>addToIndex</code> parameter's value. 
+		 * 	The <code>contain</code> parameter must be passed a <code>DisplayObjectContainer</code>.
+		 * @param addToIndex The index to add <code>obj</code> as a child at in <code>contain</code> if <code>addTo</code> is passed as true.
+		 * 	The <code>obj</code> will be added at the top(default) if less than 0.
+		 * @return Returns true or false based on the method's success.
+		 * @see #getStretchToFill()
+		 * @see #centerOn()
+		 */
+		 public static function stretchToFill(obj:DisplayObject, contain:DisplayObject = null, center:Boolean = true, addTo:Boolean = false, addToIndex:int = -1):Boolean {
+		 	var object:DisplayObject = obj;
+		 	var container:DisplayObject = contain;
+			// If container is null, try and set it to obj's parent. Else, throw Error and return.
+			if (!container) {
+				if (object.parent) {
+					container = object.parent;
+				} else {
+					throw new Error("The obj parameter must have a parent if contain is null.");
+					return false;
+				}
+			}
+			// Get scale amount.
+			var scale:Point = getStretchToFill(object, container);
+			// Set the scaleX and scaleY properties.
+			object.scaleX = scale.x;
+			object.scaleY = scale.y;
+			// If center is true, center obj on container.
+			if (center) centerOn(object, container);
+			// If true is passed to the addTo param, add obj to contain at the index passed for the addToAt param.
+			// contain MUST be a DisplayObjectContainer or else throw an Error.
+			if (addTo) {
+				if (container is DisplayObjectContainer) {
+					// Set up the index for addChildAt(). By default (addToIndex < 0), use addChld().
+					if (addToIndex < 0) (container as DisplayObjectContainer).addChild(object);
+					else (container as DisplayObjectContainer).addChildAt(object, addToIndex);
+				} else {
+					throw new Error("Must pass a DisplayObjectContainer to the contain parameter in order to add obj as a child.");
+					return false;
+				}
+			}
+		 	return true;
 		 }
 		 
 		 
@@ -270,11 +306,12 @@ package com.ajlivingston.utils {
 		 public static function getCenterOn(obj:DisplayObject, contain:DisplayObject):Point {
 		 	var object:DisplayObject = obj;
 		 	var container:DisplayObject = contain;
+		 	// Convert the coordinates to global so DisplayObjects that are not direct children of the stage will still be accurate.
 		 	var containPoint:Point = container.localToGlobal(new Point(container.x, container.y));
 		 	var objectPoint:Point = new Point(
 		 		(containPoint.x + container.width*0.5) - (object.width*0.5),
-		 		(containPoint.y + container.height*0.5) - (object.height*0.5) );
-		 	
+		 		(containPoint.y + container.height*0.5) - (object.height*0.5) );	
+		 	// Convert the coordinates back to local for the return.
 		 	return object.globalToLocal(objectPoint);
 		 }
 		 
@@ -288,24 +325,25 @@ package com.ajlivingston.utils {
 		 */
 		 public static function getCenterOnStage(obj:DisplayObject):Point {
 			var object:DisplayObject = obj;
-			var point:Point = new Point(object.x, object.y);
+			var point:Point = object.localToGlobal(new Point(object.x, object.y));
 			if (object.stage) {
 				point.x = (object.stage.stageWidth * 0.5) - (object.width * 0.5);
 				point.y = (object.stage.stageHeight * 0.5) - (object.height * 0.5);
 			} else {
 		 		throw new Error("The DisplayObject must be on the Stage.");
 		 	}
-			return point;
+			return object.globalToLocal(point);
 		 }
 		 
 		 
 		 /**
 		 * Returns a Point of the scale amounts for a DisplayObject to fill another DisplayObject.
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
 		 * 
 		 * @param obj The DisplayObject to be scaled.
 		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
 		 * @param preserveRatio Whether to preserve the current x:y scale ratio of <code>obj</code>(default), or reset it to 1:1.
-		 * @return A Point containing the <code>scaleX</code> and <code>scaleY</code> properties. Will return <code>obj</code>'s current scale values if <code>contain</code> is invalid.
+		 * @return A Point containing the values for the <code>scaleX</code> and <code>scaleY</code> properties. Will return <code>obj</code>'s current scale values if <code>contain</code> is invalid.
 		 */
 		 public static function getScaleToFill(obj:DisplayObject, contain:DisplayObject = null, preserveRatio:Boolean = true):Point {
 		 	var object:DisplayObject = obj;
@@ -387,6 +425,7 @@ package com.ajlivingston.utils {
 		 
 		 /**
 		 * Returns a Point of the scale amounts for a DisplayObject to fit another DisplayObject.
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
 		 * 
 		 * @param obj The DisplayObject to be scaled.
 		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
@@ -467,6 +506,33 @@ package com.ajlivingston.utils {
 			} else {
 		 		throw new Error("The DisplayObject must be on the Stage.");
 			}
+			return scale;
+		 }
+		 
+		 /**
+		 * Returns a Point of the scale amounts for a DisplayObject to stretch to fill another DisplayObject entirely.
+		 * Be aware that if <code>obj</code>'s parent is used for the <code>contain</code> parameter, <code>obj</code>'s own width would be a factor in the container's width it is being scaled into if it is out of bounds of the main container body.
+		 * 
+		 * @param obj The DisplayObject used to calculate return value.
+		 * @param contain The DisplayObject to scale within. If set to <code>null</code>(default) then <code>obj</code>'s parent will be used.
+		 * @return A Point containing values for the <code>scaleX</code> and <code>scaleY</code> properties. Will return <code>obj</code>'s current scale values if <code>contain</code> is invalid.
+		 */
+		 public static function getStretchToFill(obj:DisplayObject, contain:DisplayObject = null):Point {
+		 	var object:DisplayObject = obj;
+		 	var container:DisplayObject = contain;
+		 	var scale:Point = new Point(object.scaleX, object.scaleY);
+			// If container is null, try and set it to obj's parent. Else, throw Error and return.
+			if (!container) {
+				if (object.parent) {
+					container = object.parent;
+				} else {
+					throw new Error("The obj parameter must have a parent if contain is null.");
+					return scale;
+				}
+			}
+			scale.x = container.width / (object.width/object.scaleX);
+		 	scale.y = container.height / (object.height/object.scaleY);
+			
 			return scale;
 		 }
 		 
